@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Count tokens",
+  "description": "Counts the tokens of a text with tiktoken compiled to WebAssembly, before you send it to a model.",
+  "kind": "function",
+  "features": ["edge-functions", "ai", "wasm"]
+}

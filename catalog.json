@@ -2,11 +2,101 @@
   "version": 1,
   "examples": [
     {
+      "name": "count-tokens",
+      "kind": "function",
+      "path": "functions/count-tokens",
+      "title": "Count tokens",
+      "description": "Counts the tokens of a text with tiktoken compiled to WebAssembly, before you send it to a model.",
+      "features": [
+        "edge-functions",
+        "ai",
+        "wasm"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "express-app",
+      "kind": "function",
+      "path": "functions/express-app",
+      "title": "Express app",
+      "description": "Runs an existing Express app as an Edge Function, with its routes and middleware unchanged.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [
+        "express"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "hash-upload",
+      "kind": "function",
+      "path": "functions/hash-upload",
+      "title": "Hash an upload",
+      "description": "Reads a large upload as a stream and computes its SHA-256 without holding the file in memory.",
+      "features": [
+        "edge-functions",
+        "streaming"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "index.ts"
+      ]
+    },
+    {
       "name": "hello",
       "kind": "function",
       "path": "functions/hello",
       "title": "Hello",
       "description": "The smallest Edge Function: reads a query parameter and answers with JSON.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "index.ts"
+      ]
+    },
+    {
+      "name": "hono-router",
+      "kind": "function",
+      "path": "functions/hono-router",
+      "title": "Router with Hono",
+      "description": "A small REST API with several routes in one Edge Function, built with Hono.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [
+        "hono"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "mandelbrot",
+      "kind": "function",
+      "path": "functions/mandelbrot",
+      "title": "Mandelbrot",
+      "description": "Draws the Mandelbrot set as text, to see how much plain computation fits in one request.",
       "features": [
         "edge-functions"
       ],
@@ -60,6 +150,45 @@
       ]
     },
     {
+      "name": "server-sent-events",
+      "kind": "function",
+      "path": "functions/server-sent-events",
+      "title": "Server-sent events",
+      "description": "Pushes named events to the browser over one long response, and stops when the client leaves.",
+      "features": [
+        "edge-functions",
+        "streaming"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "index.ts"
+      ]
+    },
+    {
+      "name": "stream-ai-chat",
+      "kind": "function",
+      "path": "functions/stream-ai-chat",
+      "title": "Stream an AI chat",
+      "description": "Streams Claude's answer to the browser as it is written, only for signed-in users.",
+      "features": [
+        "edge-functions",
+        "auth",
+        "ai"
+      ],
+      "frameworks": [],
+      "secrets": [
+        "PROJECT_SECRET_KEY",
+        "ANTHROPIC_API_KEY"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
       "name": "stripe-webhook",
       "kind": "function",
       "path": "functions/stripe-webhook",
@@ -74,6 +203,41 @@
         "STRIPE_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET"
       ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "upload-files",
+      "kind": "function",
+      "path": "functions/upload-files",
+      "title": "Upload files",
+      "description": "Receives a multipart form, accepts files by type and size, and reports each one it rejects.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "index.ts"
+      ]
+    },
+    {
+      "name": "validate-input",
+      "kind": "function",
+      "path": "functions/validate-input",
+      "title": "Validate input",
+      "description": "Checks a JSON body with zod and answers 422 with an error per field when it is wrong.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [
+        "zod"
+      ],
+      "secrets": [],
       "minCliVersion": "0.2.0",
       "files": [
         "deno.json",

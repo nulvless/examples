@@ -61,14 +61,17 @@ Requires Node.js 22.18 or later, and Deno for functions.
 npm install
 npm run check            # manifests, names and files
 npm run check:functions  # type-checks every function with Deno
-npm run catalog          # regenerates catalog.json and the README table
+npm run catalog          # regenerates catalog.json, llms.txt and the README table
 npm test                 # tests of the scripts themselves
 ```
 
-Commit the regenerated `catalog.json` and `README.md`. CI fails when they are
-out of date.
+Commit the regenerated `catalog.json`, `llms.txt` and `README.md`. CI fails
+when they are out of date.
 
-For an app, also install and build it from its own folder.
+For an app, also install and build it from its own folder, in a clean copy:
+every dependency it imports must be in its own `package.json`.
+
+By contributing you agree to follow the [code of conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting a problem
 

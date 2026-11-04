@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Express app",
+  "description": "Runs an existing Express app as an Edge Function, with its routes and middleware unchanged.",
+  "kind": "function",
+  "features": ["edge-functions"],
+  "frameworks": ["express"]
+}

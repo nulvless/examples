@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Validate input",
+  "description": "Checks a JSON body with zod and answers 422 with an error per field when it is wrong.",
+  "kind": "function",
+  "features": ["edge-functions"],
+  "frameworks": ["zod"]
+}

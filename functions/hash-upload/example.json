@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Hash an upload",
+  "description": "Reads a large upload as a stream and computes its SHA-256 without holding the file in memory.",
+  "kind": "function",
+  "features": ["edge-functions", "streaming"]
+}

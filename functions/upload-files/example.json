@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Upload files",
+  "description": "Receives a multipart form, accepts files by type and size, and reports each one it rejects.",
+  "kind": "function",
+  "features": ["edge-functions"]
+}

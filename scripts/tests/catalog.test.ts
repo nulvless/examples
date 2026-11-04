@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { describe, it } from 'node:test';
-import { buildCatalog, renderReadmeTable, replaceCatalogSection } from '../catalog.ts';
+import { buildCatalog, renderLlmsTxt, renderReadmeTable, replaceCatalogSection } from '../catalog.ts';
 
 async function workspace(files: Record<string, string>) {
   const root = await mkdtemp(join(tmpdir(), 'examples-'));
@@ -114,5 +114,25 @@ describe('README catalog', () => {
 
   it('fails when the README has no generated section', () => {
     assert.throws(() => replaceCatalogSection('Intro', ''), /catalog:start/);
+  });
+});
+
+describe('llms.txt', () => {
+  it('lists every example with a link to its README, grouped by kind', async () => {
+    const root = await workspace({
+      'functions/hello/index.ts': '',
+      'functions/hello/example.json': manifest({ kind: 'function' }),
+      'apps/web/package.json': '{}',
+      'apps/web/example.json': manifest({ kind: 'app', title: 'Web', description: 'A web app with sign-in.' }),
+    });
+
+    const text = renderLlmsTxt(await buildCatalog(root));
+
+    assert.match(text, /^# Nulvless examples\n\n> /);
+    assert.match(
+      text,
+      /## Edge Functions\n\n- \[Hello\]\(https:\/\/raw\.githubusercontent\.com\/nulvless\/examples\/main\/functions\/hello\/README\.md\): Answers with a greeting\. Install: `nulvless functions new <slug> --template hello`\n/,
+    );
+    assert.match(text, /## Apps\n\n- \[Web\]\(.+\/apps\/web\/README\.md\): A web app with sign-in\. Install: `nulvless create <dir> --example web`\n/);
   });
 });

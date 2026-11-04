@@ -113,6 +113,43 @@ export async function buildCatalog(root: string): Promise<Catalog> {
   return { version: 1, examples };
 }
 
+const RAW_URL = 'https://raw.githubusercontent.com/nulvless/examples/main';
+
+const installCommand: Record<ExampleKind, (name: string) => string> = {
+  function: (name) => `nulvless functions new <slug> --template ${name}`,
+  app: (name) => `nulvless create <dir> --example ${name}`,
+};
+
+const kindHeading: Record<ExampleKind, string> = { function: 'Edge Functions', app: 'Apps' };
+
+export function renderLlmsTxt(catalog: Catalog) {
+  const section = (kind: ExampleKind) => {
+    const items = catalog.examples
+      .filter((example) => example.kind === kind)
+      .map(
+        (example) =>
+          `- [${example.title}](${RAW_URL}/${example.path}/README.md): ${example.description} Install: \`${installCommand[kind](example.name)}\``,
+      );
+    return [`## ${kindHeading[kind]}`, '', ...items].join('\n');
+  };
+
+  return [
+    '# Nulvless examples',
+    '',
+    '> Edge Functions and apps built on Nulvless, installable with the Nulvless CLI (`npx @nulvless/cli`). Each README explains what the example does, the secrets it needs and how to try it.',
+    '',
+    section('function'),
+    '',
+    section('app'),
+    '',
+    '## Optional',
+    '',
+    `- [Catalog](${RAW_URL}/catalog.json): every example as JSON, with its files and secrets`,
+    '- [Nulvless docs](https://www.nulvless.com/llms.txt): the platform, SDK and CLI documentation',
+    '',
+  ].join('\n');
+}
+
 export function renderReadmeTable(catalog: Catalog) {
   const section = (kind: ExampleKind, heading: string, command: (name: string) => string) => {
     const rows = catalog.examples
@@ -122,8 +159,8 @@ export function renderReadmeTable(catalog: Catalog) {
   };
 
   return [
-    section('function', 'Edge Functions', (name) => `nulvless functions new <slug> --template ${name}`),
-    section('app', 'Apps', (name) => `nulvless create <dir> --example ${name}`),
+    section('function', kindHeading.function, installCommand.function),
+    section('app', kindHeading.app, installCommand.app),
   ].join('\n\n');
 }
 
@@ -143,6 +180,7 @@ async function main(root: string, verify: boolean) {
   const catalog = await buildCatalog(root);
   const outputs = {
     'catalog.json': serialize(catalog),
+    'llms.txt': renderLlmsTxt(catalog),
     'README.md': replaceCatalogSection(await readFile(join(root, 'README.md'), 'utf8'), renderReadmeTable(catalog)),
   };
 
