@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Require a role",
+  "description": "Lets a request through only when the user holds one of the given roles in an organization.",
+  "kind": "function",
+  "features": ["edge-functions", "auth", "rbac"],
+  "secrets": ["PROJECT_SECRET_KEY"]
+}

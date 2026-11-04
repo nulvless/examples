@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Verify a user session",
+  "description": "Rejects requests without a valid access token from one of your project's users.",
+  "kind": "function",
+  "features": ["edge-functions", "auth"],
+  "secrets": ["PROJECT_SECRET_KEY"]
+}

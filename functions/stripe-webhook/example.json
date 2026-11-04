@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Stripe webhook",
+  "description": "Receives Stripe events and rejects any request whose signature does not match.",
+  "kind": "function",
+  "features": ["edge-functions", "webhooks"],
+  "secrets": ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"]
+}

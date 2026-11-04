@@ -1,0 +1,24 @@
+name: Request an example
+description: Suggest an Edge Function or app you would like to copy.
+labels: [example-request]
+body:
+  - type: input
+    id: idea
+    attributes:
+      label: What should it do?
+      description: One sentence, such as "Send a Slack message when a user signs up".
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Edge Function
+        - App
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Why it would help

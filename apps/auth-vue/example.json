@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Auth with Vue",
+  "description": "A Vue 3 single-page app with sign-in, a guarded route and the signed-in user's profile.",
+  "kind": "app",
+  "features": ["auth"],
+  "frameworks": ["vue", "vite"]
+}

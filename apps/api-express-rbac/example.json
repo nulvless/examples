@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Express API with roles",
+  "description": "An Express API that authenticates every request and allows each route only to the roles it names.",
+  "kind": "app",
+  "features": ["auth", "rbac"],
+  "frameworks": ["express", "node"]
+}

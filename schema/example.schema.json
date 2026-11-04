@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/nulvless/examples/main/schema/example.schema.json",
+  "title": "Nulvless example",
+  "description": "Describes one example. The catalog is generated from these files.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "description", "kind", "features"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "title": {
+      "description": "Short title, in sentence case.",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 60
+    },
+    "description": {
+      "description": "One sentence on what the example does.",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 160
+    },
+    "kind": {
+      "description": "`function` is one Edge Function for `nulvless functions new --template`. `app` is a whole project for `nulvless create --example`.",
+      "enum": ["function", "app"]
+    },
+    "features": {
+      "description": "Nulvless features the example uses.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["auth", "rbac", "comms", "oauth-server", "edge-functions", "webhooks"] }
+    },
+    "frameworks": {
+      "description": "Frameworks the example is built with.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "secrets": {
+      "description": "Secret names the example needs. Values are never stored here.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" }
+    },
+    "minCliVersion": {
+      "description": "Oldest CLI version that can install the example.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    }
+  }
+}

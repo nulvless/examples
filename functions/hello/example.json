@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Hello",
+  "description": "The smallest Edge Function: reads a query parameter and answers with JSON.",
+  "kind": "function",
+  "features": ["edge-functions"]
+}

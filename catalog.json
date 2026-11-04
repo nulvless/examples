@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "name": "hello",
+      "kind": "function",
+      "path": "functions/hello",
+      "title": "Hello",
+      "description": "The smallest Edge Function: reads a query parameter and answers with JSON.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "index.ts"
+      ]
+    },
+    {
+      "name": "require-role",
+      "kind": "function",
+      "path": "functions/require-role",
+      "title": "Require a role",
+      "description": "Lets a request through only when the user holds one of the given roles in an organization.",
+      "features": [
+        "edge-functions",
+        "auth",
+        "rbac"
+      ],
+      "frameworks": [],
+      "secrets": [
+        "PROJECT_SECRET_KEY"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "send-email",
+      "kind": "function",
+      "path": "functions/send-email",
+      "title": "Send an email",
+      "description": "Sends one of your email templates to the signed-in user, never to an address from the request.",
+      "features": [
+        "edge-functions",
+        "auth",
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [
+        "PROJECT_SECRET_KEY"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "stripe-webhook",
+      "kind": "function",
+      "path": "functions/stripe-webhook",
+      "title": "Stripe webhook",
+      "description": "Receives Stripe events and rejects any request whose signature does not match.",
+      "features": [
+        "edge-functions",
+        "webhooks"
+      ],
+      "frameworks": [],
+      "secrets": [
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "verify-session",
+      "kind": "function",
+      "path": "functions/verify-session",
+      "title": "Verify a user session",
+      "description": "Rejects requests without a valid access token from one of your project's users.",
+      "features": [
+        "edge-functions",
+        "auth"
+      ],
+      "frameworks": [],
+      "secrets": [
+        "PROJECT_SECRET_KEY"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "api-express-rbac",
+      "kind": "app",
+      "path": "apps/api-express-rbac",
+      "title": "Express API with roles",
+      "description": "An Express API that authenticates every request and allows each route only to the roles it names.",
+      "features": [
+        "auth",
+        "rbac"
+      ],
+      "frameworks": [
+        "express",
+        "node"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "package.json",
+        "src/lib/nulvless.ts",
+        "src/middleware/auth.ts",
+        "src/server.ts",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "name": "auth-nextjs",
+      "kind": "app",
+      "path": "apps/auth-nextjs",
+      "title": "Auth with Next.js",
+      "description": "Sign-in in the browser and a route handler that verifies the user's token on the server.",
+      "features": [
+        "auth"
+      ],
+      "frameworks": [
+        "nextjs",
+        "react"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "app/api/me/route.ts",
+        "app/dashboard/page.tsx",
+        "app/globals.css",
+        "app/layout.tsx",
+        "app/page.tsx",
+        "app/sign-in/page.tsx",
+        "lib/nulvless-server.ts",
+        "lib/nulvless.ts",
+        "package.json",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "name": "auth-vue",
+      "kind": "app",
+      "path": "apps/auth-vue",
+      "title": "Auth with Vue",
+      "description": "A Vue 3 single-page app with sign-in, a guarded route and the signed-in user's profile.",
+      "features": [
+        "auth"
+      ],
+      "frameworks": [
+        "vue",
+        "vite"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "index.html",
+        "package.json",
+        "src/App.vue",
+        "src/composables/useUser.ts",
+        "src/env.d.ts",
+        "src/lib/nulvless.ts",
+        "src/main.ts",
+        "src/router.ts",
+        "src/views/Home.vue",
+        "src/views/SignIn.vue",
+        "tsconfig.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "name": "sign-in-with-nulvless",
+      "kind": "app",
+      "path": "apps/sign-in-with-nulvless",
+      "title": "Sign in with Nulvless",
+      "description": "A third-party app that signs people in through your project's OAuth Server, with PKCE and no SDK.",
+      "features": [
+        "oauth-server"
+      ],
+      "frameworks": [
+        "node"
+      ],
+      "secrets": [
+        "OAUTH_CLIENT_SECRET"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "package.json",
+        "src/oauth.ts",
+        "src/pages.ts",
+        "src/pkce.ts",
+        "src/server.ts",
+        "tsconfig.json"
+      ]
+    }
+  ]
+}

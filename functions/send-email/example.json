@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Send an email",
+  "description": "Sends one of your email templates to the signed-in user, never to an address from the request.",
+  "kind": "function",
+  "features": ["edge-functions", "auth", "comms"],
+  "secrets": ["PROJECT_SECRET_KEY"]
+}

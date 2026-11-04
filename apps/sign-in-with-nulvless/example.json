@@ -1,0 +1,9 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Sign in with Nulvless",
+  "description": "A third-party app that signs people in through your project's OAuth Server, with PKCE and no SDK.",
+  "kind": "app",
+  "features": ["oauth-server"],
+  "frameworks": ["node"],
+  "secrets": ["OAUTH_CLIENT_SECRET"]
+}

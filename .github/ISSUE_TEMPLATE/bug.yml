@@ -1,0 +1,31 @@
+name: Example does not work
+description: An example fails to install, build or run.
+labels: [bug]
+body:
+  - type: input
+    id: example
+    attributes:
+      label: Example
+      description: The folder name, such as verify-session.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you ran
+      description: The commands, in order. Add `--json` to CLI commands.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: What happened
+      description: The error or the unexpected output.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `nulvless --version` and `node --version`.

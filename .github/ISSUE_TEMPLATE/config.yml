@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Nulvless docs
+    url: https://www.nulvless.com/docs
+    about: How the platform, SDK and CLI work.
+  - name: Report a vulnerability
+    url: mailto:security@nulvless.com
+    about: Never open a public issue for a security problem.

@@ -1,0 +1,19 @@
+{
+  "name": "@nulvless/examples",
+  "private": true,
+  "type": "module",
+  "license": "MIT-0",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "catalog": "node scripts/catalog.ts",
+    "check": "node scripts/check.ts",
+    "test": "node --test scripts/tests/*.test.ts",
+    "check:functions": "for dir in functions/*/; do (cd \"$dir\" && deno check --no-lock index.ts) || exit 1; done"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "ajv": "^8.17.1"
+  }
+}

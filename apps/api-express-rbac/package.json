@@ -1,0 +1,20 @@
+{
+  "name": "nulvless-api-express-rbac",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env.local src/server.ts",
+    "start": "tsx --env-file=.env.local src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nulvless/nulvless-js": "^0.1.6",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3"
+  }
+}

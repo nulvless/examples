@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Auth with Next.js",
+  "description": "Sign-in in the browser and a route handler that verifies the user's token on the server.",
+  "kind": "app",
+  "features": ["auth"],
+  "frameworks": ["nextjs", "react"]
+}
