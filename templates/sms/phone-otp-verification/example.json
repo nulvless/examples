@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "SMS verification code",
+  "description": "Sent with a one-time code to confirm a phone number or sign in.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "variables": [
+    "code",
+    "platform.name"
+  ]
+}

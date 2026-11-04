@@ -2,6 +2,62 @@
   "version": 1,
   "examples": [
     {
+      "name": "count-tokens",
+      "kind": "function",
+      "path": "functions/count-tokens",
+      "title": "Count tokens",
+      "description": "Counts the tokens of a text with tiktoken compiled to WebAssembly, before you send it to a model.",
+      "features": [
+        "edge-functions",
+        "ai",
+        "wasm"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "express-app",
+      "kind": "function",
+      "path": "functions/express-app",
+      "title": "Express app",
+      "description": "Runs an existing Express app as an Edge Function, with its routes and middleware unchanged.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [
+        "express"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "hash-upload",
+      "kind": "function",
+      "path": "functions/hash-upload",
+      "title": "Hash an upload",
+      "description": "Reads a large upload as a stream and computes its SHA-256 without holding the file in memory.",
+      "features": [
+        "edge-functions",
+        "streaming"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
       "name": "hello",
       "kind": "function",
       "path": "functions/hello",
@@ -14,6 +70,43 @@
       "secrets": [],
       "minCliVersion": "0.2.0",
       "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "hono-router",
+      "kind": "function",
+      "path": "functions/hono-router",
+      "title": "Router with Hono",
+      "description": "A small REST API with several routes in one Edge Function, built with Hono.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [
+        "hono"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "mandelbrot",
+      "kind": "function",
+      "path": "functions/mandelbrot",
+      "title": "Mandelbrot",
+      "description": "Draws the Mandelbrot set as text, to see how much plain computation fits in one request.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
         "index.ts"
       ]
     },
@@ -60,6 +153,46 @@
       ]
     },
     {
+      "name": "server-sent-events",
+      "kind": "function",
+      "path": "functions/server-sent-events",
+      "title": "Server-sent events",
+      "description": "Pushes named events to the browser over one long response, and stops when the client leaves.",
+      "features": [
+        "edge-functions",
+        "streaming"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "stream-ai-chat",
+      "kind": "function",
+      "path": "functions/stream-ai-chat",
+      "title": "Stream an AI chat",
+      "description": "Streams Claude's answer to the browser as it is written, only for signed-in users.",
+      "features": [
+        "edge-functions",
+        "auth",
+        "ai"
+      ],
+      "frameworks": [],
+      "secrets": [
+        "PROJECT_SECRET_KEY",
+        "ANTHROPIC_API_KEY"
+      ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
       "name": "stripe-webhook",
       "kind": "function",
       "path": "functions/stripe-webhook",
@@ -74,6 +207,42 @@
         "STRIPE_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET"
       ],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "upload-files",
+      "kind": "function",
+      "path": "functions/upload-files",
+      "title": "Upload files",
+      "description": "Receives a multipart form, accepts files by type and size, and reports each one it rejects.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "deno.json",
+        "index.ts"
+      ]
+    },
+    {
+      "name": "validate-input",
+      "kind": "function",
+      "path": "functions/validate-input",
+      "title": "Validate input",
+      "description": "Checks a JSON body with zod and answers 422 with an error per field when it is wrong.",
+      "features": [
+        "edge-functions"
+      ],
+      "frameworks": [
+        "zod"
+      ],
+      "secrets": [],
       "minCliVersion": "0.2.0",
       "files": [
         "deno.json",
@@ -218,6 +387,281 @@
         "src/server.ts",
         "tsconfig.json"
       ]
+    },
+    {
+      "name": "change-email-identity",
+      "kind": "template",
+      "path": "templates/email/change-email-identity",
+      "title": "Email change code",
+      "description": "Sent with a code that confirms a new email address on an existing account.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "Confirm your email change"
+        },
+        "variables": [
+          "code",
+          "platform.name"
+        ]
+      }
+    },
+    {
+      "name": "change-phone-identity",
+      "kind": "template",
+      "path": "templates/sms/change-phone-identity",
+      "title": "Phone change code",
+      "description": "Sent with a code that confirms a new phone number on an existing account.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.txt"
+      ],
+      "template": {
+        "channel": "sms",
+        "variables": [
+          "code",
+          "platform.name"
+        ]
+      }
+    },
+    {
+      "name": "email-link-verification",
+      "kind": "template",
+      "path": "templates/email/email-link-verification",
+      "title": "Email verification link",
+      "description": "Sent to confirm an email address with a link, at sign-up or when adding an email.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "Confirm your email address"
+        },
+        "variables": [
+          "platform.name",
+          "redirect_uri"
+        ]
+      }
+    },
+    {
+      "name": "email-otp-enable-mfa-request",
+      "kind": "template",
+      "path": "templates/email/email-otp-enable-mfa-request",
+      "title": "Email MFA setup code",
+      "description": "Sent with a code that confirms email as a second sign-in factor.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "Enable two-factor authentication"
+        },
+        "variables": [
+          "code",
+          "platform.name"
+        ]
+      }
+    },
+    {
+      "name": "email-otp-verification",
+      "kind": "template",
+      "path": "templates/email/email-otp-verification",
+      "title": "Email verification code",
+      "description": "Sent with a one-time code to confirm an email address or sign in.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "Verification code"
+        },
+        "variables": [
+          "code",
+          "platform.name"
+        ]
+      }
+    },
+    {
+      "name": "grants-invite",
+      "kind": "template",
+      "path": "templates/email/grants-invite",
+      "title": "Organization invite",
+      "description": "Sent when someone is invited to an organization, with an optional message.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "You’re invited to {{platform.name}}"
+        },
+        "variables": [
+          "message",
+          "platform.name",
+          "redirect_uri"
+        ]
+      }
+    },
+    {
+      "name": "phone-link-verification",
+      "kind": "template",
+      "path": "templates/sms/phone-link-verification",
+      "title": "SMS verification link",
+      "description": "Sent with a link that confirms a phone number.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.txt"
+      ],
+      "template": {
+        "channel": "sms",
+        "variables": [
+          "platform.name",
+          "redirect_uri"
+        ]
+      }
+    },
+    {
+      "name": "phone-otp-enable-mfa-request",
+      "kind": "template",
+      "path": "templates/sms/phone-otp-enable-mfa-request",
+      "title": "SMS MFA setup code",
+      "description": "Sent with a code that confirms SMS as a second sign-in factor.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.txt"
+      ],
+      "template": {
+        "channel": "sms",
+        "variables": [
+          "code",
+          "platform.name"
+        ]
+      }
+    },
+    {
+      "name": "phone-otp-verification",
+      "kind": "template",
+      "path": "templates/sms/phone-otp-verification",
+      "title": "SMS verification code",
+      "description": "Sent with a one-time code to confirm a phone number or sign in.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.txt"
+      ],
+      "template": {
+        "channel": "sms",
+        "variables": [
+          "code",
+          "platform.name"
+        ]
+      }
+    },
+    {
+      "name": "reset-password-email",
+      "kind": "template",
+      "path": "templates/email/reset-password-email",
+      "title": "Password reset email",
+      "description": "Sent with a link to choose a new password.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "Reset your password"
+        },
+        "variables": [
+          "platform.name",
+          "redirect_uri"
+        ]
+      }
+    },
+    {
+      "name": "welcome-user",
+      "kind": "template",
+      "path": "templates/email/welcome-user",
+      "title": "Welcome email",
+      "description": "Sent when an account is created, with a link to get started.",
+      "features": [
+        "comms"
+      ],
+      "frameworks": [],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        "en-US.html"
+      ],
+      "template": {
+        "channel": "email",
+        "subject": {
+          "en-US": "Welcome to {{platform.name}}"
+        },
+        "variables": [
+          "platform.name",
+          "redirect_uri"
+        ]
+      }
     }
   ]
 }

@@ -1,0 +1,1 @@
+{{platform.name}} verify your phone: {{redirect_uri}}

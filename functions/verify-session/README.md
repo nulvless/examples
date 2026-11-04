@@ -7,8 +7,9 @@ users.
 ## Use it
 
 ```bash
-nulvless functions new me --template verify-session
-nulvless secrets set PROJECT_SECRET_KEY --function me
+nulvless functions new whoami --template verify-session
+nulvless functions deploy whoami
+nulvless secrets set PROJECT_SECRET_KEY --function whoami
 ```
 
 `PROJECT_SECRET_KEY` is a secret key (`sk-…`) of your project, from **API keys**
@@ -21,7 +22,7 @@ From your app, send the user's access token:
 ```ts
 const token = await nulvless.auth.getAccessToken();
 
-await fetch('https://<project>.nulvless.co/functions/me', {
+await fetch('https://<project>.nulvless.co/functions/whoami', {
   headers: { Authorization: `Bearer ${token}` },
 });
 ```

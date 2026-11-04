@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.png binary
+catalog.json linguist-generated=true
+llms.txt linguist-generated=true

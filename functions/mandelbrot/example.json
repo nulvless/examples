@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Mandelbrot",
+  "description": "Draws the Mandelbrot set as text, to see how much plain computation fits in one request.",
+  "kind": "function",
+  "features": ["edge-functions"]
+}

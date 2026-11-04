@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Phone change code",
+  "description": "Sent with a code that confirms a new phone number on an existing account.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "variables": [
+    "code",
+    "platform.name"
+  ]
+}

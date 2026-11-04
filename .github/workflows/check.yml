@@ -21,6 +21,7 @@ jobs:
       - run: npm test
       - run: npm run check
       - run: node scripts/catalog.ts --verify
+      - run: test -L .claude/skills/add-nulvless-example && test -f .claude/skills/add-nulvless-example/SKILL.md
 
   functions:
     runs-on: ubuntu-latest

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Organization invite",
+  "description": "Sent when someone is invited to an organization, with an optional message.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "You’re invited to {{platform.name}}"
+  },
+  "variables": [
+    "message",
+    "platform.name",
+    "redirect_uri"
+  ]
+}

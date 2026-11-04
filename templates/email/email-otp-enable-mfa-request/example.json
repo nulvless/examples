@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Email MFA setup code",
+  "description": "Sent with a code that confirms email as a second sign-in factor.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "Enable two-factor authentication"
+  },
+  "variables": [
+    "code",
+    "platform.name"
+  ]
+}

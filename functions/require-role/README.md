@@ -7,6 +7,7 @@ organization passed as `?org=`. The token check and the role check are one call.
 
 ```bash
 nulvless functions new delete-workspace --template require-role
+nulvless functions deploy delete-workspace
 nulvless secrets set PROJECT_SECRET_KEY --function delete-workspace
 ```
 

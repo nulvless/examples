@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Welcome email",
+  "description": "Sent when an account is created, with a link to get started.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "Welcome to {{platform.name}}"
+  },
+  "variables": [
+    "platform.name",
+    "redirect_uri"
+  ]
+}

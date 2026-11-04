@@ -1,0 +1,46 @@
+# Nulvless examples
+
+> Edge Functions and apps built on Nulvless, installable with the Nulvless CLI (`npx @nulvless/cli`). Each README explains what the example does, the secrets it needs and how to try it.
+
+## Edge Functions
+
+- [Count tokens](https://raw.githubusercontent.com/nulvless/examples/main/functions/count-tokens/README.md): Counts the tokens of a text with tiktoken compiled to WebAssembly, before you send it to a model. Install: `nulvless functions new <slug> --template count-tokens`
+- [Express app](https://raw.githubusercontent.com/nulvless/examples/main/functions/express-app/README.md): Runs an existing Express app as an Edge Function, with its routes and middleware unchanged. Install: `nulvless functions new <slug> --template express-app`
+- [Hash an upload](https://raw.githubusercontent.com/nulvless/examples/main/functions/hash-upload/README.md): Reads a large upload as a stream and computes its SHA-256 without holding the file in memory. Install: `nulvless functions new <slug> --template hash-upload`
+- [Hello](https://raw.githubusercontent.com/nulvless/examples/main/functions/hello/README.md): The smallest Edge Function: reads a query parameter and answers with JSON. Install: `nulvless functions new <slug> --template hello`
+- [Router with Hono](https://raw.githubusercontent.com/nulvless/examples/main/functions/hono-router/README.md): A small REST API with several routes in one Edge Function, built with Hono. Install: `nulvless functions new <slug> --template hono-router`
+- [Mandelbrot](https://raw.githubusercontent.com/nulvless/examples/main/functions/mandelbrot/README.md): Draws the Mandelbrot set as text, to see how much plain computation fits in one request. Install: `nulvless functions new <slug> --template mandelbrot`
+- [Require a role](https://raw.githubusercontent.com/nulvless/examples/main/functions/require-role/README.md): Lets a request through only when the user holds one of the given roles in an organization. Install: `nulvless functions new <slug> --template require-role`
+- [Send an email](https://raw.githubusercontent.com/nulvless/examples/main/functions/send-email/README.md): Sends one of your email templates to the signed-in user, never to an address from the request. Install: `nulvless functions new <slug> --template send-email`
+- [Server-sent events](https://raw.githubusercontent.com/nulvless/examples/main/functions/server-sent-events/README.md): Pushes named events to the browser over one long response, and stops when the client leaves. Install: `nulvless functions new <slug> --template server-sent-events`
+- [Stream an AI chat](https://raw.githubusercontent.com/nulvless/examples/main/functions/stream-ai-chat/README.md): Streams Claude's answer to the browser as it is written, only for signed-in users. Install: `nulvless functions new <slug> --template stream-ai-chat`
+- [Stripe webhook](https://raw.githubusercontent.com/nulvless/examples/main/functions/stripe-webhook/README.md): Receives Stripe events and rejects any request whose signature does not match. Install: `nulvless functions new <slug> --template stripe-webhook`
+- [Upload files](https://raw.githubusercontent.com/nulvless/examples/main/functions/upload-files/README.md): Receives a multipart form, accepts files by type and size, and reports each one it rejects. Install: `nulvless functions new <slug> --template upload-files`
+- [Validate input](https://raw.githubusercontent.com/nulvless/examples/main/functions/validate-input/README.md): Checks a JSON body with zod and answers 422 with an error per field when it is wrong. Install: `nulvless functions new <slug> --template validate-input`
+- [Verify a user session](https://raw.githubusercontent.com/nulvless/examples/main/functions/verify-session/README.md): Rejects requests without a valid access token from one of your project's users. Install: `nulvless functions new <slug> --template verify-session`
+
+## Apps
+
+- [Express API with roles](https://raw.githubusercontent.com/nulvless/examples/main/apps/api-express-rbac/README.md): An Express API that authenticates every request and allows each route only to the roles it names. Install: `nulvless create <dir> --example api-express-rbac`
+- [Auth with Next.js](https://raw.githubusercontent.com/nulvless/examples/main/apps/auth-nextjs/README.md): Sign-in in the browser and a route handler that verifies the user's token on the server. Install: `nulvless create <dir> --example auth-nextjs`
+- [Auth with Vue](https://raw.githubusercontent.com/nulvless/examples/main/apps/auth-vue/README.md): A Vue 3 single-page app with sign-in, a guarded route and the signed-in user's profile. Install: `nulvless create <dir> --example auth-vue`
+- [Sign in with Nulvless](https://raw.githubusercontent.com/nulvless/examples/main/apps/sign-in-with-nulvless/README.md): A third-party app that signs people in through your project's OAuth Server, with PKCE and no SDK. Install: `nulvless create <dir> --example sign-in-with-nulvless`
+
+## Communication templates
+
+- [Email change code](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/change-email-identity/README.md): Sent with a code that confirms a new email address on an existing account. Paste into Communications → Templates in the console, slug `change-email-identity`
+- [Phone change code](https://raw.githubusercontent.com/nulvless/examples/main/templates/sms/change-phone-identity/README.md): Sent with a code that confirms a new phone number on an existing account. Paste into Communications → Templates in the console, slug `change-phone-identity`
+- [Email verification link](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/email-link-verification/README.md): Sent to confirm an email address with a link, at sign-up or when adding an email. Paste into Communications → Templates in the console, slug `email-link-verification`
+- [Email MFA setup code](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/email-otp-enable-mfa-request/README.md): Sent with a code that confirms email as a second sign-in factor. Paste into Communications → Templates in the console, slug `email-otp-enable-mfa-request`
+- [Email verification code](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/email-otp-verification/README.md): Sent with a one-time code to confirm an email address or sign in. Paste into Communications → Templates in the console, slug `email-otp-verification`
+- [Organization invite](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/grants-invite/README.md): Sent when someone is invited to an organization, with an optional message. Paste into Communications → Templates in the console, slug `grants-invite`
+- [SMS verification link](https://raw.githubusercontent.com/nulvless/examples/main/templates/sms/phone-link-verification/README.md): Sent with a link that confirms a phone number. Paste into Communications → Templates in the console, slug `phone-link-verification`
+- [SMS MFA setup code](https://raw.githubusercontent.com/nulvless/examples/main/templates/sms/phone-otp-enable-mfa-request/README.md): Sent with a code that confirms SMS as a second sign-in factor. Paste into Communications → Templates in the console, slug `phone-otp-enable-mfa-request`
+- [SMS verification code](https://raw.githubusercontent.com/nulvless/examples/main/templates/sms/phone-otp-verification/README.md): Sent with a one-time code to confirm a phone number or sign in. Paste into Communications → Templates in the console, slug `phone-otp-verification`
+- [Password reset email](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/reset-password-email/README.md): Sent with a link to choose a new password. Paste into Communications → Templates in the console, slug `reset-password-email`
+- [Welcome email](https://raw.githubusercontent.com/nulvless/examples/main/templates/email/welcome-user/README.md): Sent when an account is created, with a link to get started. Paste into Communications → Templates in the console, slug `welcome-user`
+
+## Optional
+
+- [Catalog](https://raw.githubusercontent.com/nulvless/examples/main/catalog.json): every example as JSON, with its files and secrets
+- [Nulvless docs](https://www.nulvless.com/llms.txt): the platform, SDK and CLI documentation

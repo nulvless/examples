@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Password reset email",
+  "description": "Sent with a link to choose a new password.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "Reset your password"
+  },
+  "variables": [
+    "platform.name",
+    "redirect_uri"
+  ]
+}

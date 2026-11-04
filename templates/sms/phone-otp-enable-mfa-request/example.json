@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "SMS MFA setup code",
+  "description": "Sent with a code that confirms SMS as a second sign-in factor.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "variables": [
+    "code",
+    "platform.name"
+  ]
+}

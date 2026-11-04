@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "SMS verification link",
+  "description": "Sent with a link that confirms a phone number.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "variables": [
+    "platform.name",
+    "redirect_uri"
+  ]
+}

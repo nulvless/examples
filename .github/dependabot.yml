@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /apps/*
+    schedule:
+      interval: weekly
+    groups:
+      examples:
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

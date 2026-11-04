@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Email verification link",
+  "description": "Sent to confirm an email address with a link, at sign-up or when adding an email.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "Confirm your email address"
+  },
+  "variables": [
+    "platform.name",
+    "redirect_uri"
+  ]
+}

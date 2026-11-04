@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Email verification code",
+  "description": "Sent with a one-time code to confirm an email address or sign in.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "Verification code"
+  },
+  "variables": [
+    "code",
+    "platform.name"
+  ]
+}

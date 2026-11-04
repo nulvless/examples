@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Server-sent events",
+  "description": "Pushes named events to the browser over one long response, and stops when the client leaves.",
+  "kind": "function",
+  "features": ["edge-functions", "streaming"]
+}

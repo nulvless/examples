@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Router with Hono",
+  "description": "A small REST API with several routes in one Edge Function, built with Hono.",
+  "kind": "function",
+  "features": ["edge-functions"],
+  "frameworks": ["hono"]
+}

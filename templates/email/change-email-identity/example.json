@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schema/example.schema.json",
+  "title": "Email change code",
+  "description": "Sent with a code that confirms a new email address on an existing account.",
+  "kind": "template",
+  "features": [
+    "comms"
+  ],
+  "subject": {
+    "en-US": "Confirm your email change"
+  },
+  "variables": [
+    "code",
+    "platform.name"
+  ]
+}

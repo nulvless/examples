@@ -1,7 +1,17 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Ajv2020 } from 'ajv/dist/2020.js';
-import { exampleDirectories, KIND_FOLDERS, listFiles, MANIFEST_FILE, type ExampleKind } from './catalog.ts';
+import { join as joinPath } from 'node:path';
+import {
+  exampleDirectories,
+  KIND_FOLDERS,
+  listFiles,
+  MANIFEST_FILE,
+  TEMPLATE_CHANNELS,
+  type ExampleKind,
+  type Manifest,
+  type TemplateChannel,
+} from './catalog.ts';
 
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const DEPLOYABLE = /(\.(ts|tsx|js|jsx|mjs)|(^|\/)deno\.jsonc?|(^|\/)\.npmrc)$/;
@@ -14,17 +24,65 @@ async function loadValidator() {
   return new Ajv2020({ allErrors: true }).compile(schema);
 }
 
+const TEMPLATE_LANGUAGES = ['en-US', 'pt-BR'];
+const DEFAULT_LANGUAGE = 'en-US';
+const TEMPLATE_EXTENSION = { email: 'html', sms: 'txt' } as const;
+const PLACEHOLDER = /{{\s*([a-z_][a-z0-9_.]*)\s*}}/gi;
+
 function requiredFiles(kind: ExampleKind) {
-  return kind === 'app' ? ['README.md', '.env.example'] : [FUNCTION_ENTRYPOINT, 'README.md'];
+  if (kind === 'app') return ['README.md', '.env.example'];
+  if (kind === 'template') return ['README.md'];
+  return [FUNCTION_ENTRYPOINT, 'deno.json', 'README.md'];
+}
+
+async function templateProblems(directory: string, files: string[], manifest: Manifest, channel: TemplateChannel) {
+  const problems: string[] = [];
+  const extension = TEMPLATE_EXTENSION[channel];
+  const languageFile = new RegExp(`^(${TEMPLATE_LANGUAGES.join('|')})\\.${extension}$`);
+  const languageFiles = files.filter((file) => languageFile.test(file));
+
+  if (!languageFiles.includes(`${DEFAULT_LANGUAGE}.${extension}`)) problems.push(`missing ${DEFAULT_LANGUAGE}.${extension}.`);
+  for (const file of files) {
+    if (file === MANIFEST_FILE || file === 'README.md' || languageFile.test(file)) continue;
+    problems.push(`${file} is not a template file; use <language>.${extension} with ${TEMPLATE_LANGUAGES.join(' or ')}.`);
+  }
+
+  if (channel === 'email') {
+    for (const file of languageFiles) {
+      if (!manifest.subject?.[file.split('.')[0]!]) problems.push(`${file} has no subject in ${MANIFEST_FILE}.`);
+    }
+  }
+
+  const texts = [
+    ...(await Promise.all(languageFiles.map((file) => readFile(joinPath(directory, file), 'utf8')))),
+    ...Object.values(manifest.subject ?? {}),
+  ];
+  const used = new Set(texts.flatMap((text) => [...text.matchAll(PLACEHOLDER)].map((match) => match[1]!)));
+  const declared = new Set(manifest.variables ?? []);
+
+  for (const variable of used) if (!declared.has(variable)) problems.push(`{{${variable}}} is used but not listed in variables.`);
+  for (const variable of declared) if (!used.has(variable)) problems.push(`${variable} is listed in variables but never used.`);
+
+  return problems;
 }
 
 export async function findProblems(root: string): Promise<string[]> {
   const validate = await loadValidator();
   const problems: string[] = [];
 
-  for (const { kind, name, directory } of await exampleDirectories(root)) {
-    const label = `${KIND_FOLDERS[kind]}/${name}`;
-    const report = (message: string) => problems.push(`${label}: ${message}`);
+  const seen = new Map<string, string>();
+
+  for (const { kind, name, path, directory, channel } of await exampleDirectories(root)) {
+    const report = (message: string) => problems.push(`${path}: ${message}`);
+
+    if (channel !== undefined && !TEMPLATE_CHANNELS.includes(channel as TemplateChannel)) {
+      report(`${channel} is not a channel; put templates in ${TEMPLATE_CHANNELS.map((entry) => `${KIND_FOLDERS.template}/${entry}`).join(' or ')}.`);
+      continue;
+    }
+
+    const duplicate = seen.get(name);
+    if (duplicate) report(`the name ${name} is already used by ${duplicate}; the CLI installs examples by name.`);
+    seen.set(name, path);
 
     if (!SLUG.test(name)) {
       report('use a lowercase kebab-case name.');
@@ -50,6 +108,10 @@ export async function findProblems(root: string): Promise<string[]> {
 
     for (const required of requiredFiles(kind)) {
       if (!files.includes(required)) report(`missing ${required}.`);
+    }
+
+    if (kind === 'template') {
+      for (const problem of await templateProblems(directory, files, manifest, channel as TemplateChannel)) report(problem);
     }
 
     if (kind === 'function') {

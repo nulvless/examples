@@ -8,6 +8,7 @@ them, and logs the ones it handles. Replace the `console.log` calls in
 
 ```bash
 nulvless functions new stripe-webhook --template stripe-webhook
+nulvless functions deploy stripe-webhook
 nulvless secrets set STRIPE_SECRET_KEY --function stripe-webhook
 nulvless secrets set STRIPE_WEBHOOK_SECRET --function stripe-webhook
 ```

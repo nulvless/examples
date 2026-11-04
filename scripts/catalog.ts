@@ -3,7 +3,14 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import { join, relative, sep } from 'node:path';
 
-export type ExampleKind = 'function' | 'app';
+export type ExampleKind = 'function' | 'app' | 'template';
+export type TemplateChannel = 'email' | 'sms';
+
+export interface TemplateFields {
+  channel: TemplateChannel;
+  subject?: Record<string, string>;
+  variables: string[];
+}
 
 export interface Manifest {
   title: string;
@@ -13,6 +20,8 @@ export interface Manifest {
   frameworks?: string[];
   secrets?: string[];
   minCliVersion?: string;
+  subject?: Record<string, string>;
+  variables?: string[];
 }
 
 export interface CatalogEntry {
@@ -26,6 +35,7 @@ export interface CatalogEntry {
   secrets: string[];
   minCliVersion: string;
   files: string[];
+  template?: TemplateFields;
 }
 
 export interface Catalog {
@@ -33,13 +43,13 @@ export interface Catalog {
   examples: CatalogEntry[];
 }
 
-export const KIND_FOLDERS: Record<ExampleKind, string> = { function: 'functions', app: 'apps' };
+export const KIND_FOLDERS: Record<ExampleKind, string> = { function: 'functions', app: 'apps', template: 'templates' };
 export const MANIFEST_FILE = 'example.json';
 export const DEFAULT_MIN_CLI_VERSION = '0.2.0';
 
 const NEVER_PUBLISHED = new Set(['node_modules', '.next', 'dist', '.turbo', '.vercel', '.DS_Store']);
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const FUNCTION_ONLY_DOCS = new Set(['README.md']);
+const KINDS_WITHOUT_README_INSTALL = new Set<ExampleKind>(['function', 'template']);
 const README_START = '<!-- catalog:start -->';
 const README_END = '<!-- catalog:end -->';
 
@@ -69,12 +79,40 @@ export async function listFiles(directory: string): Promise<string[]> {
   return files.filter((path) => path.split('/').every(isPublished)).sort();
 }
 
-export async function exampleDirectories(root: string) {
-  const directories: { kind: ExampleKind; name: string; directory: string }[] = [];
+export const TEMPLATE_CHANNELS: TemplateChannel[] = ['email', 'sms'];
+
+export interface ExampleDirectory {
+  kind: ExampleKind;
+  name: string;
+  path: string;
+  directory: string;
+  channel?: string;
+}
+
+async function subfolders(directory: string) {
+  const entries = await readdir(directory, { withFileTypes: true }).catch(() => []);
+  return entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+}
+
+export async function exampleDirectories(root: string): Promise<ExampleDirectory[]> {
+  const directories: ExampleDirectory[] = [];
   for (const [kind, folder] of Object.entries(KIND_FOLDERS) as [ExampleKind, string][]) {
-    const entries = await readdir(join(root, folder), { withFileTypes: true }).catch(() => []);
-    for (const entry of entries) {
-      if (entry.isDirectory()) directories.push({ kind, name: entry.name, directory: join(root, folder, entry.name) });
+    if (kind !== 'template') {
+      for (const name of await subfolders(join(root, folder))) {
+        directories.push({ kind, name, path: `${folder}/${name}`, directory: join(root, folder, name) });
+      }
+      continue;
+    }
+    for (const channel of await subfolders(join(root, folder))) {
+      for (const name of await subfolders(join(root, folder, channel))) {
+        directories.push({
+          kind,
+          name,
+          channel,
+          path: `${folder}/${channel}/${name}`,
+          directory: join(root, folder, channel, name),
+        });
+      }
     }
   }
   return directories;
@@ -85,18 +123,18 @@ export async function readManifest(directory: string): Promise<Manifest> {
 }
 
 function installedFiles(kind: ExampleKind, files: string[]) {
-  return files.filter((file) => file !== MANIFEST_FILE && !(kind === 'function' && FUNCTION_ONLY_DOCS.has(file)));
+  return files.filter((file) => file !== MANIFEST_FILE && !(KINDS_WITHOUT_README_INSTALL.has(kind) && file === 'README.md'));
 }
 
 export async function buildCatalog(root: string): Promise<Catalog> {
   const examples: CatalogEntry[] = [];
 
-  for (const { kind, name, directory } of await exampleDirectories(root)) {
+  for (const { name, path, directory, channel } of await exampleDirectories(root)) {
     const manifest = await readManifest(directory);
     examples.push({
       name,
       kind: manifest.kind,
-      path: `${KIND_FOLDERS[kind]}/${name}`,
+      path,
       title: manifest.title,
       description: manifest.description,
       features: manifest.features,
@@ -104,6 +142,15 @@ export async function buildCatalog(root: string): Promise<Catalog> {
       secrets: manifest.secrets ?? [],
       minCliVersion: manifest.minCliVersion ?? DEFAULT_MIN_CLI_VERSION,
       files: installedFiles(manifest.kind, await listFiles(directory)),
+      ...(manifest.kind === 'template'
+        ? {
+            template: {
+              channel: channel as TemplateChannel,
+              ...(manifest.subject ? { subject: manifest.subject } : {}),
+              variables: manifest.variables ?? [],
+            },
+          }
+        : {}),
     });
   }
 
@@ -113,17 +160,71 @@ export async function buildCatalog(root: string): Promise<Catalog> {
   return { version: 1, examples };
 }
 
+const RAW_URL = 'https://raw.githubusercontent.com/nulvless/examples/main';
+
+const installCommand: Record<Exclude<ExampleKind, 'template'>, (name: string) => string> = {
+  function: (name) => `nulvless functions new <slug> --template ${name}`,
+  app: (name) => `nulvless create <dir> --example ${name}`,
+};
+
+const kindHeading: Record<ExampleKind, string> = {
+  function: 'Edge Functions',
+  app: 'Apps',
+  template: 'Communication templates',
+};
+
+function howToUse(example: CatalogEntry) {
+  return example.kind === 'template'
+    ? `Paste into Communications → Templates in the console, slug \`${example.name}\``
+    : `Install: \`${installCommand[example.kind](example.name)}\``;
+}
+
+export function renderLlmsTxt(catalog: Catalog) {
+  const section = (kind: ExampleKind) => {
+    const items = catalog.examples
+      .filter((example) => example.kind === kind)
+      .map(
+        (example) =>
+          `- [${example.title}](${RAW_URL}/${example.path}/README.md): ${example.description} ${howToUse(example)}`,
+      );
+    return [`## ${kindHeading[kind]}`, '', ...items].join('\n');
+  };
+
+  return [
+    '# Nulvless examples',
+    '',
+    '> Edge Functions and apps built on Nulvless, installable with the Nulvless CLI (`npx @nulvless/cli`). Each README explains what the example does, the secrets it needs and how to try it.',
+    '',
+    section('function'),
+    '',
+    section('app'),
+    '',
+    section('template'),
+    '',
+    '## Optional',
+    '',
+    `- [Catalog](${RAW_URL}/catalog.json): every example as JSON, with its files and secrets`,
+    '- [Nulvless docs](https://www.nulvless.com/llms.txt): the platform, SDK and CLI documentation',
+    '',
+  ].join('\n');
+}
+
 export function renderReadmeTable(catalog: Catalog) {
-  const section = (kind: ExampleKind, heading: string, command: (name: string) => string) => {
+  const section = (kind: Exclude<ExampleKind, 'template'>, heading: string, command: (name: string) => string) => {
     const rows = catalog.examples
       .filter((example) => example.kind === kind)
       .map((example) => `| [${example.name}](${example.path}) | ${example.description} | \`${command(example.name)}\` |`);
     return [`### ${heading}`, '', '| Example | What it does | Install |', '| --- | --- | --- |', ...rows].join('\n');
   };
 
+  const templates = catalog.examples
+    .filter((example) => example.kind === 'template')
+    .map((example) => `| [${example.name}](${example.path}) | ${example.description} | ${example.template?.channel} |`);
+
   return [
-    section('function', 'Edge Functions', (name) => `nulvless functions new <slug> --template ${name}`),
-    section('app', 'Apps', (name) => `nulvless create <dir> --example ${name}`),
+    section('function', kindHeading.function, installCommand.function),
+    section('app', kindHeading.app, installCommand.app),
+    [`### ${kindHeading.template}`, '', '| Template | When it is sent | Channel |', '| --- | --- | --- |', ...templates].join('\n'),
   ].join('\n\n');
 }
 
@@ -143,6 +244,7 @@ async function main(root: string, verify: boolean) {
   const catalog = await buildCatalog(root);
   const outputs = {
     'catalog.json': serialize(catalog),
+    'llms.txt': renderLlmsTxt(catalog),
     'README.md': replaceCatalogSection(await readFile(join(root, 'README.md'), 'utf8'), renderReadmeTable(catalog)),
   };
 
