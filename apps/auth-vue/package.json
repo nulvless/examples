@@ -8,14 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@nulvless/nulvless-js": "^0.1.6",
+    "@nulvless/nulvless-js": "^0.2.2",
     "vue": "^3.5.44",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
-    "@types/node": "^22.20.5",
+    "@types/node": "^26.6.6",
     "@vitejs/plugin-vue": "^6.0.10",
-    "typescript": "~5.9.3",
+    "typescript": "~7.0.2",
     "vite": "^8.3.5",
     "vue-tsc": "^3.3.14"
   }
