@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Sign in by SMS with React",
+  "description": "Passwordless sign-in with a code sent by SMS: phone number, code, resend and the signed-in screen.",
+  "kind": "app",
+  "features": ["auth"],
+  "frameworks": ["react", "vite"]
+}

@@ -44,9 +44,11 @@ available to everyone right away, without a new CLI release.
 
 | Example | What it does | Install |
 | --- | --- | --- |
+| [account-center-react](apps/account-center-react) | Email and password sign-up and sign-in, a second-factor step, and an account page that lists and ends the user's sessions. | `nulvless create <dir> --example account-center-react` |
 | [api-express-rbac](apps/api-express-rbac) | An Express API that authenticates every request and allows each route only to the roles it names. | `nulvless create <dir> --example api-express-rbac` |
 | [auth-nextjs](apps/auth-nextjs) | Sign-in in the browser and a route handler that verifies the user's token on the server. | `nulvless create <dir> --example auth-nextjs` |
 | [auth-vue](apps/auth-vue) | A Vue 3 single-page app with sign-in, a guarded route and the signed-in user's profile. | `nulvless create <dir> --example auth-vue` |
+| [phone-otp-react](apps/phone-otp-react) | Passwordless sign-in with a code sent by SMS: phone number, code, resend and the signed-in screen. | `nulvless create <dir> --example phone-otp-react` |
 | [sign-in-with-nulvless](apps/sign-in-with-nulvless) | A third-party app that signs people in through your project's OAuth Server, with PKCE and no SDK. | `nulvless create <dir> --example sign-in-with-nulvless` |
 
 ### Communication templates

@@ -21,9 +21,11 @@
 
 ## Apps
 
+- [Account center with React](https://raw.githubusercontent.com/nulvless/examples/main/apps/account-center-react/README.md): Email and password sign-up and sign-in, a second-factor step, and an account page that lists and ends the user's sessions. Install: `nulvless create <dir> --example account-center-react`
 - [Express API with roles](https://raw.githubusercontent.com/nulvless/examples/main/apps/api-express-rbac/README.md): An Express API that authenticates every request and allows each route only to the roles it names. Install: `nulvless create <dir> --example api-express-rbac`
 - [Auth with Next.js](https://raw.githubusercontent.com/nulvless/examples/main/apps/auth-nextjs/README.md): Sign-in in the browser and a route handler that verifies the user's token on the server. Install: `nulvless create <dir> --example auth-nextjs`
 - [Auth with Vue](https://raw.githubusercontent.com/nulvless/examples/main/apps/auth-vue/README.md): A Vue 3 single-page app with sign-in, a guarded route and the signed-in user's profile. Install: `nulvless create <dir> --example auth-vue`
+- [Sign in by SMS with React](https://raw.githubusercontent.com/nulvless/examples/main/apps/phone-otp-react/README.md): Passwordless sign-in with a code sent by SMS: phone number, code, resend and the signed-in screen. Install: `nulvless create <dir> --example phone-otp-react`
 - [Sign in with Nulvless](https://raw.githubusercontent.com/nulvless/examples/main/apps/sign-in-with-nulvless/README.md): A third-party app that signs people in through your project's OAuth Server, with PKCE and no SDK. Install: `nulvless create <dir> --example sign-in-with-nulvless`
 
 ## Communication templates
