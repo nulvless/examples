@@ -1,0 +1,8 @@
+{
+  "$schema": "../../schema/example.schema.json",
+  "title": "Account center with React",
+  "description": "Email and password sign-up and sign-in, a second-factor step, and an account page that lists and ends the user's sessions.",
+  "kind": "app",
+  "features": ["auth"],
+  "frameworks": ["react", "vite"]
+}

@@ -270,6 +270,53 @@
       ]
     },
     {
+      "name": "account-center-react",
+      "kind": "app",
+      "path": "apps/account-center-react",
+      "title": "Account center with React",
+      "description": "Email and password sign-up and sign-in, a second-factor step, and an account page that lists and ends the user's sessions.",
+      "features": [
+        "auth"
+      ],
+      "frameworks": [
+        "react",
+        "vite"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "index.html",
+        "package.json",
+        "src/App.tsx",
+        "src/components/AppShell.tsx",
+        "src/components/AuthLayout.tsx",
+        "src/components/CodeInput.tsx",
+        "src/components/Icons.tsx",
+        "src/components/PasswordField.tsx",
+        "src/components/RequireSession.tsx",
+        "src/components/SudoDialog.tsx",
+        "src/env.d.ts",
+        "src/lib/flows.ts",
+        "src/lib/format.ts",
+        "src/lib/nulvless.ts",
+        "src/lib/user.tsx",
+        "src/main.tsx",
+        "src/pages/Account.tsx",
+        "src/pages/Activate.tsx",
+        "src/pages/CheckEmail.tsx",
+        "src/pages/Home.tsx",
+        "src/pages/SignIn.tsx",
+        "src/pages/SignUp.tsx",
+        "src/pages/Verify.tsx",
+        "src/styles.css",
+        "tsconfig.json",
+        "vite.config.ts"
+      ]
+    },
+    {
       "name": "api-express-rbac",
       "kind": "app",
       "path": "apps/api-express-rbac",
@@ -316,6 +363,7 @@
         ".gitignore",
         "README.md",
         "app/api/me/route.ts",
+        "app/components/AuthLayout.tsx",
         "app/dashboard/page.tsx",
         "app/globals.css",
         "app/layout.tsx",
@@ -349,13 +397,52 @@
         "index.html",
         "package.json",
         "src/App.vue",
+        "src/components/AuthLayout.vue",
         "src/composables/useUser.ts",
         "src/env.d.ts",
         "src/lib/nulvless.ts",
         "src/main.ts",
         "src/router.ts",
+        "src/styles.css",
         "src/views/Home.vue",
         "src/views/SignIn.vue",
+        "tsconfig.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "name": "phone-otp-react",
+      "kind": "app",
+      "path": "apps/phone-otp-react",
+      "title": "Sign in by SMS with React",
+      "description": "Passwordless sign-in with a code sent by SMS: phone number, code, resend and the signed-in screen.",
+      "features": [
+        "auth"
+      ],
+      "frameworks": [
+        "react",
+        "vite"
+      ],
+      "secrets": [],
+      "minCliVersion": "0.2.0",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "README.md",
+        "index.html",
+        "package.json",
+        "src/App.tsx",
+        "src/components/AuthLayout.tsx",
+        "src/components/CodeInput.tsx",
+        "src/components/CodeStep.tsx",
+        "src/components/PhoneStep.tsx",
+        "src/components/SignedIn.tsx",
+        "src/env.d.ts",
+        "src/lib/countries.ts",
+        "src/lib/errors.ts",
+        "src/lib/nulvless.ts",
+        "src/main.tsx",
+        "src/styles.css",
         "tsconfig.json",
         "vite.config.ts"
       ]
